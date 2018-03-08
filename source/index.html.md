@@ -173,9 +173,9 @@ This endpoint retrieves all referral leads, optionally filtered to only get rece
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-since | nil | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
+Parameter | Description
+--------- | -----------
+since | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
 
 
 <aside class="success">
@@ -463,9 +463,9 @@ This endpoint retrieves all users in the company, optionally filtered to only ge
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-since | nil | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
+Parameter | Description
+--------- | -----------
+since | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
 
 
 <aside class="success">
