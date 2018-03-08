@@ -242,6 +242,14 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#users" class="toc-h1 toc-link" data-title="users">Users</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-users" class="toc-h2 toc-link" data-title="get-all-users">Get All Users</a>
+                  </li>
+              </ul>
+          </li>
       </div>
         <ul class="toc-footer">
             <li><a href='mailto:brandon@staffingreferrals.com'>Sign Up for a Developer Key</a></li>
@@ -264,18 +272,20 @@
 </blockquote>
 <pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'curb'</span> <span class="c1"># Curl access in ruby</span>
 
-<span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE'</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
-  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'ACCESS_TOKEN'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
+<span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE'</span><span class="p">,</span> <span class="no">PARAMS</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
+  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
 <span class="k">end</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE"</span>
-  -H <span class="s2">"ACCESS_TOKEN: YOUR_TOKEN_HERE"</span>
+curl <span class="s2">"https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: YOUR_TOKEN_HERE"</span>
 </code></pre>
 <p>Staffing Referrals allows certain admin accounts to access the API.  It uses API access tokens to allow access to the API.  <strong>Please contact your account executive to set up an account and obtain your token.</strong></p>
 
 <p>Staffing Referrals expects for the access token to be included in all API requests to the server in a header that looks like the following:</p>
 
-<p><code>ACCESS_TOKEN: YOUR_TOKEN_HERE</code></p>
+<p><code>Authorization: YOUR_TOKEN_HERE</code></p>
 
 <aside class="notice">
 You must replace <code>YOUR_TOKEN_HERE</code> with your access token.
@@ -312,11 +322,13 @@ You must replace <code>YOUR_TOKEN_HERE</code> with your access token.
 <p>In some situations, you might encounter an HTTP response other than 200 OK.  In the event your endpoint is incorrect or there is a system issue, the HTTP response code will indicate the problem.</p>
 <h1 id='referrals'>Referrals</h1><h2 id='get-all-referrals'>Get All Referrals</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'curb'</span> <span class="c1"># Curl access in ruby</span>
 
-<span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/referrals'</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
-  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'ACCESS_TOKEN'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
+<span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/referrals'</span><span class="p">,</span> <span class="p">{})</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
+  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
 <span class="k">end</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals"</span>
-  -H <span class="s2">"ACCESS_TOKEN: YOUR_TOKEN_HERE"</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: YOUR_TOKEN_HERE"</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -385,22 +397,24 @@ You must replace <code>YOUR_TOKEN_HERE</code> with your access token.
 <tr>
 <td>since</td>
 <td>nil</td>
-<td>An <strong>optional</strong> ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since the noon on Fourth of July in 2017 Denver Time, use <code>2017-07-04T12:00:00-07:00</code>.</td>
+<td>An <strong>optional</strong> ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use <code>2017-07-04T12:00:00-07:00</code>.</td>
 </tr>
 </tbody></table>
 
 <aside class="success">
-Remember — you must provide the ACCESS_TOKEN header for all requests.
+Remember — you must provide the Authorization header for all requests.
 </aside>
 <h2 id='update-referral'>Update Referral</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'curb'</span> <span class="c1"># Curl access in ruby</span>
 
 <span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/referrals/10'</span><span class="p">,</span>
                  <span class="p">{</span><span class="ss">status: </span><span class="s2">"discarded"</span><span class="p">})</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
-  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'ACCESS_TOKEN'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
+  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
 <span class="k">end</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals/10"</span>
-  -H <span class="s2">"ACCESS_TOKEN: YOUR_TOKEN_HERE"</span>
-  -d <span class="s2">"status=discarded"</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals/10"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: YOUR_TOKEN_HERE"</span> <span class="se">\</span>
+  -d <span class="s2">"status=discarded"</span> <span class="se">\</span>
   -X POST 
 </code></pre>
 <blockquote>
@@ -494,12 +508,14 @@ Remember — you must provide the ACCESS_TOKEN header for all requests.
                      <span class="ss">phone: </span><span class="s1">'505-555-1234'</span><span class="p">,</span>
                    <span class="p">}</span>
                  <span class="p">})</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
-  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'ACCESS_TOKEN'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
+  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
 <span class="k">end</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals/10"</span>
-  -H <span class="s2">"ACCESS_TOKEN: YOUR_TOKEN_HERE"</span>
-  -d <span class="s2">"recruiter[email]=recruiter@email.com&amp;ambassador[email]=ambassador@email.com&amp;ambassador[first_name]=Anne&amp;ambassador[last_name]=Ambassador&amp;ambassador[phone]=505-555-5555&amp;applicant[email]=applicant@email.com&amp;applicant[first_name]=Andrew&amp;applicant[last_name]=Applicant&amp;applicant[phone]=505-555-1234"</span>
-  -X POST 
+
+<span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/referrals/10"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: YOUR_TOKEN_HERE"</span> <span class="se">\</span>
+  -d <span class="s2">"recruiter[email]=recruiter@email.com&amp;ambassador[email]=ambassador@email.com&amp;ambassador[first_name]=Anne&amp;ambassador[last_name]=Ambassador&amp;ambassador[phone]=505-555-5555&amp;applicant[email]=applicant@email.com&amp;applicant[first_name]=Andrew&amp;applicant[last_name]=Applicant&amp;applicant[phone]=505-555-1234"</span> <span class="se">\</span>
+  -X POST
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
@@ -601,6 +617,90 @@ Remember — you must provide the ACCESS_TOKEN header for all requests.
 </tbody></table>
 <h3 id='response-2'>Response</h3>
 <p>If successful, the API will respond with the details of the referral lead.  See example to the right.</p>
+<h1 id='users'>Users</h1><h2 id='get-all-users'>Get All Users</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'curb'</span> <span class="c1"># Curl access in ruby</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Curl</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'https://example.staffingreferrals.com/api/v1/users'</span><span class="p">,</span> <span class="p">{})</span> <span class="k">do</span> <span class="o">|</span><span class="n">http</span><span class="o">|</span>
+  <span class="n">http</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"YOUR_TOKEN_HERE"</span>
+<span class="k">end</span>
+
+<span class="n">json</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://example.staffingreferrals.com/api/v1/users"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: YOUR_TOKEN_HERE"</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">149</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"Active"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"hester_ziemann@metz.name"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"Recruity"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"Recruiter"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:02 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2001-02-02 21:05:06 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"role_name"</span><span class="p">:</span><span class="s2">"recruiter"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">150</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"Active"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"erick@rueckerstrosin.name"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"Pro"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"Motor"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:02 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:04 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"role_name"</span><span class="p">:</span><span class="s2">"ambassador"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">151</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"Active"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"dandre@homenick.net"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"Candy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"Date"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:02 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:04 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"role_name"</span><span class="p">:</span><span class="s2">"applicant"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">148</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"Active"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"brittany@lehnerwest.io"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"Anne"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"Admin"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="s2">"2001-02-02 21:05:06 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2018-03-07 23:34:04 UTC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"role_name"</span><span class="p">:</span><span class="s2">"admin"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all users in the company, optionally filtered to only get recently updated or created ones.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://example.staffingreferrals.com/api/v1/users</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>since</td>
+<td>nil</td>
+<td>An <strong>optional</strong> ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use <code>2017-07-04T12:00:00-07:00</code>.</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+Remember — you must provide the Authorization header for all requests.
+</aside>
 
       </div>
       <div class="dark-box">
