@@ -366,17 +366,17 @@ This endpoint creates a manual referral.  If the ambassador is not in the system
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-recruiter[email] | The email of the recruiter.  If this is provided for an existing ambassador, it will be ignored.
-ambassador[email] | The email of the ambassador.  If they exist, no further ambassador information is required.
-ambassador[first_name] | The first name of the ambassador.  Required if creating a new ambassador.
-ambassador[last_name] | The last name of the ambassador.
-ambassador[phone] | The phone of the ambassador.
-applicant[email] | The email of the applicant.
-applicant[first_name] | The first name of the applicant.  Required.
-applicant[last_name] | The last name of the applicant.
-applicant[phone] | The phone of the applicant.
+Parameter | Required | Description
+--------- | -------- | -----------
+recruiter[email] | Required when the ambassador doesn't exist | The email of the recruiter.  If this is provided for an existing ambassador, it will be ignored.
+ambassador[email] | Always Required | The email of the ambassador.  If they exist, no further ambassador information is required.
+ambassador[first_name] | Required when the ambassador doesn't exist | The first name of the ambassador.
+ambassador[last_name] | | The last name of the ambassador.
+ambassador[phone] | | The phone of the ambassador.
+applicant[email] | Always Required | The email of the applicant.
+applicant[first_name] | Always Required | The first name of the applicant.
+applicant[last_name] | Always Required | The last name of the applicant.
+applicant[phone] | Always Required | The phone of the applicant.
 
 ### Response
 If successful, the API will respond with the details of the referral lead.  See example to the right.
