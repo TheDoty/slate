@@ -31,15 +31,17 @@ This API is currently under development.  If you need a feature we don't current
 ```ruby
 require 'curb' # Curl access in ruby
 
-http = Curl.get('https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE', params) do |http|
-  http.headers['ACCESS_TOKEN'] = "YOUR_TOKEN_HERE"
+http = Curl.get('https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE', PARAMS) do |http|
+  http.headers['Authorization'] = "YOUR_TOKEN_HERE"
 end
+
+json = JSON.parse(http.body)
 ```
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE"
-  -H "ACCESS_TOKEN: YOUR_TOKEN_HERE"
+curl "https://example.staffingreferrals.com/api/v1/ENDPOINT_HERE" \
+  -H "Authorization: YOUR_TOKEN_HERE"
 ```
 
 
@@ -47,7 +49,7 @@ Staffing Referrals allows certain admin accounts to access the API.  It uses API
 
 Staffing Referrals expects for the access token to be included in all API requests to the server in a header that looks like the following:
 
-`ACCESS_TOKEN: YOUR_TOKEN_HERE`
+`Authorization: YOUR_TOKEN_HERE`
 
 <aside class="notice">
 You must replace <code>YOUR_TOKEN_HERE</code> with your access token.
@@ -97,14 +99,16 @@ In some situations, you might encounter an HTTP response other than 200 OK.  In 
 ```ruby
 require 'curb' # Curl access in ruby
 
-http = Curl.get('https://example.staffingreferrals.com/api/v1/referrals', params) do |http|
-  http.headers['ACCESS_TOKEN'] = "YOUR_TOKEN_HERE"
+http = Curl.get('https://example.staffingreferrals.com/api/v1/referrals', {}) do |http|
+  http.headers['Authorization'] = "YOUR_TOKEN_HERE"
 end
+
+json = JSON.parse(http.body)
 ```
 
 ```shell
-curl "https://example.staffingreferrals.com/api/v1/referrals"
-  -H "ACCESS_TOKEN: YOUR_TOKEN_HERE"
+curl "https://example.staffingreferrals.com/api/v1/referrals" \
+  -H "Authorization: YOUR_TOKEN_HERE"
 ```
 
 > The above command returns JSON structured like this:
@@ -171,11 +175,11 @@ This endpoint retrieves all referral leads, optionally filtered to only get rece
 
 Parameter | Default | Description
 --------- | ------- | -----------
-since | nil | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since the noon on Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
+since | nil | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
 
 
 <aside class="success">
-Remember — you must provide the ACCESS_TOKEN header for all requests.
+Remember — you must provide the Authorization header for all requests.
 </aside>
 
 ## Update Referral
@@ -185,14 +189,16 @@ require 'curb' # Curl access in ruby
 
 http = Curl.post('https://example.staffingreferrals.com/api/v1/referrals/10',
                  {status: "discarded"}) do |http|
-  http.headers['ACCESS_TOKEN'] = "YOUR_TOKEN_HERE"
+  http.headers['Authorization'] = "YOUR_TOKEN_HERE"
 end
+
+json = JSON.parse(http.body)
 ```
 
 ```shell
-curl "https://example.staffingreferrals.com/api/v1/referrals/10"
-  -H "ACCESS_TOKEN: YOUR_TOKEN_HERE"
-  -d "status=discarded"
+curl "https://example.staffingreferrals.com/api/v1/referrals/10" \
+  -H "Authorization: YOUR_TOKEN_HERE" \
+  -d "status=discarded" \
   -X POST 
 ```
 
@@ -286,15 +292,17 @@ http = Curl.post('https://example.staffingreferrals.com/api/v1/referrals',
                      phone: '505-555-1234',
                    }
                  }) do |http|
-  http.headers['ACCESS_TOKEN'] = "YOUR_TOKEN_HERE"
+  http.headers['Authorization'] = "YOUR_TOKEN_HERE"
 end
+
+json = JSON.parse(http.body)
 ```
 
 ```shell
-curl "https://example.staffingreferrals.com/api/v1/referrals/10"
-  -H "ACCESS_TOKEN: YOUR_TOKEN_HERE"
-  -d "recruiter[email]=recruiter@email.com&ambassador[email]=ambassador@email.com&ambassador[first_name]=Anne&ambassador[last_name]=Ambassador&ambassador[phone]=505-555-5555&applicant[email]=applicant@email.com&applicant[first_name]=Andrew&applicant[last_name]=Applicant&applicant[phone]=505-555-1234"
-  -X POST 
+curl "https://example.staffingreferrals.com/api/v1/referrals/10" \
+  -H "Authorization: YOUR_TOKEN_HERE" \
+  -d "recruiter[email]=recruiter@email.com&ambassador[email]=ambassador@email.com&ambassador[first_name]=Anne&ambassador[last_name]=Ambassador&ambassador[phone]=505-555-5555&applicant[email]=applicant@email.com&applicant[first_name]=Andrew&applicant[last_name]=Applicant&applicant[phone]=505-555-1234" \
+  -X POST
 ```
 
 > The above command returns JSON structured like this:
@@ -373,3 +381,93 @@ applicant[phone] | The phone of the applicant.
 ### Response
 If successful, the API will respond with the details of the referral lead.  See example to the right.
 
+
+# Users
+
+## Get All Users
+
+```ruby
+require 'curb' # Curl access in ruby
+
+http = Curl.get('https://example.staffingreferrals.com/api/v1/users', {}) do |http|
+  http.headers['Authorization'] = "YOUR_TOKEN_HERE"
+end
+
+json = JSON.parse(http.body)
+```
+
+```shell
+curl "https://example.staffingreferrals.com/api/v1/users" \
+  -H "Authorization: YOUR_TOKEN_HERE"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "status":"success",
+  "data":[
+    {
+      "id":149,
+      "status":"Active",
+      "email":"hester_ziemann@metz.name",
+      "first_name":"Recruity",
+      "last_name":"Recruiter",
+      "phone":null,
+      "created_at":"2018-03-07 23:34:02 UTC",
+      "updated_at":"2001-02-02 21:05:06 UTC",
+      "role_name":"recruiter"
+    },
+    {
+      "id":150,
+      "status":"Active",
+      "email":"erick@rueckerstrosin.name",
+      "first_name":"Pro",
+      "last_name":"Motor",
+      "phone":null,
+      "created_at":"2018-03-07 23:34:02 UTC",
+      "updated_at":"2018-03-07 23:34:04 UTC",
+      "role_name":"ambassador"
+    },
+    {
+      "id":151,
+      "status":"Active",
+      "email":"dandre@homenick.net",
+      "first_name":"Candy",
+      "last_name":"Date",
+      "phone":null,
+      "created_at":"2018-03-07 23:34:02 UTC",
+      "updated_at":"2018-03-07 23:34:04 UTC",
+      "role_name":"applicant"
+    },
+    {
+      "id":148,
+      "status":"Active",
+      "email":"brittany@lehnerwest.io",
+      "first_name":"Anne",
+      "last_name":"Admin",
+      "phone":null,
+      "created_at":"2001-02-02 21:05:06 UTC",
+      "updated_at":"2018-03-07 23:34:04 UTC",
+      "role_name":"admin"
+    }
+  ]
+}
+```
+
+This endpoint retrieves all users in the company, optionally filtered to only get recently updated or created ones.
+
+### HTTP Request
+
+`GET https://example.staffingreferrals.com/api/v1/users`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+since | nil | An **optional** ISO-8601 formatted date to provide a lower bound for updates that you are interested in.  For example, if you want all referral leads created or updated since noon on the Fourth of July in 2017 Denver Time, use `2017-07-04T12:00:00-07:00`.
+
+
+<aside class="success">
+Remember — you must provide the Authorization header for all requests.
+</aside>
